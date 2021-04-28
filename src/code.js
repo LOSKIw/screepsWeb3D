@@ -5,11 +5,11 @@ function getData(){
       })
       .then(function (response) {
         data = response.data.terrain;
+		console.log(data);
       })
       .catch(function (error) {
         console.log(error);
     });
-	console.log(data);
 }
 
 function getUrl(){
