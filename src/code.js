@@ -1,9 +1,7 @@
 function getData(){
-    let token = document.getElementById('token')
-    axios.get('https://screeps-cros.herokuapp.com/https://screeps.com/api/game/time', {
-        params: {
-            'shard': 'shard2'
-        }
+	let url = getUrl();
+	let data = undefined;
+    axios.get(url, {
       })
       .then(function (response) {
         console.log(response);
@@ -11,4 +9,11 @@ function getData(){
       .catch(function (error) {
         console.log(error);
     });
+}
+
+function getUrl(){
+	let room = document.getElementById('room').value;
+	let shard = document.getElementById('shard').value;
+	let url = 'https://cors-anywhere.herokuapp.com/https://screeps.com/api/game/room-terrain?shard=' + shard + '&room=' + room;
+	return url
 }
