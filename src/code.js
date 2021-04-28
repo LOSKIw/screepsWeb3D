@@ -4,11 +4,12 @@ function getData(){
     axios.get(url, {
       })
       .then(function (response) {
-        console.log(response);
+        data = response.data.terrain;
       })
       .catch(function (error) {
         console.log(error);
     });
+	console.log(data);
 }
 
 function getUrl(){
