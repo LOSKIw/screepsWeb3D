@@ -1,5 +1,5 @@
 function getData(){
-    axios.get('https://screeps.com/api/game/room-terrain', {
+    axios.get('https://screeps-cros.herokuapp.com/https://screeps.com/api/game/room-terrain', {
         params: {
             shard: "shard2",
             room: "W4N49"
