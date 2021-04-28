@@ -1,10 +1,7 @@
 function getData(){
     let token = document.getElementById('token')
-    axios.get('https://screeps-cros.herokuapp.com/https://screeps.com/api/game/room-terrain', {
-        params: {
-            'shard': "shard2",
-            'room': "W4N49"
-        },
+    axios.get('https://screeps-cros.herokuapp.com/https://screeps.com/api/auth/me', {
+        params: {},
         headers: {
             'X-token': token
         }
