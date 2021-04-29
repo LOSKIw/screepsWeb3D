@@ -38,20 +38,14 @@ function delCav(){
 	cav.renderer.forceContextLoss();
 	cav.renderer.content = null;
 	cav.renderer.domElement = null;
-	// for (let i = cav.scene.children.length - 1; i >= 0; i--) { 
-	// 	if(cav.scene.children[i].type === "Mesh") {
-	// 		cav.scene.remove(cav.scene.children[i]); 
-	// 	}
-	// } 
-	// cav.scene.dispose();
-	// cav.camera.dispose();
-	// cav.renderer.dispose();
 	cancelAnimationFrame(animateId);
 	animateId = undefined;
 }
 
-let timeStep = 0.005;
-let step = 0;
+let timeStep1 = 0.005;
+let step1 = 0;
+let timeStep2 = 0.001;
+let step2 = 0;
 function drawRoom(data){
 	if(animateId){
 		document.body.removeChild( cav.renderer.domElement )
@@ -95,8 +89,8 @@ function drawRoom(data){
 	//			new THREE.MeshPhongMaterial( { color: color} ) );
 		new THREE.MeshLambertMaterial({ color: 0x808080 }))
 	groundMesh.position.y = 0;
-	groundMesh.position.x = 25;
-	groundMesh.position.z = 25;	
+	groundMesh.position.x = 24.5;
+	groundMesh.position.z = 24.5;	
 	cav.scene.add( groundMesh );
 
 	for(let i=0;i<50;i++){
@@ -123,9 +117,15 @@ function drawRoom(data){
 	function animate() {
 		animateId = requestAnimationFrame( animate );
 		cav.light.position.y = 25 
-		cav.light.position.x = Math.cos(step) * 25 + 25;
-		cav.light.position.z = Math.sin(step) * 25 + 25;
-		step = timeStep + step;
+		cav.light.position.x = Math.cos(step1) * 25 + 25;
+		cav.light.position.z = Math.sin(step1) * 25 + 25;
+
+		cav.camera.position.z = Math.cos(step2) * 50 + 25;
+		cav.camera.position.x = Math.sin(step2) * 50 + 25;
+		cav.camera.lookAt(new THREE.Vector3(25,0,25));
+
+		step1 = timeStep1 + step1;
+		step2 = timeStep2 + step2;
 		cav.renderer.render( cav.scene, cav.camera );
 	}
 	// var controls = new THREE.OrbitControls(camera,renderer.domElement)
