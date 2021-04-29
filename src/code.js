@@ -50,7 +50,7 @@ function delCav(){
 	animateId = undefined;
 }
 
-let timeStep = 0.001;
+let timeStep = 0.005;
 let step = 0;
 function drawRoom(data){
 	if(animateId){
@@ -109,7 +109,9 @@ function drawRoom(data){
 	}
 	// var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	// scene.add( light );
-	cav.light = new THREE.PointLight( 0x404040, 10, 100 );
+	const sphere = new THREE.SphereGeometry( 0.5, 16, 8 );
+	cav.light = new THREE.PointLight( 0x404040, 5, 100 );
+	//cav.light.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xffff80 } ) ) );
 	cav.light.position.set( 25, 25, 0 );
 	cav.scene.add( cav.light );
 
