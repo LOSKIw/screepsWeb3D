@@ -24,12 +24,44 @@ const terrainDic = {
 	wall:3
 }
 
+let cav = {}
+
+let animateId = undefined;
+
+function delCav(){
+	let arr = cav.scene.children.filter(x=>x)
+	arr.forEach(a=>{
+		dispose(cav.scene,a);
+	})
+	cav.scene.remove();
+	cav.renderer.dispose();
+	cav.renderer.forceContextLoss();
+	cav.renderer.content = null;
+	cav.renderer.domElement = null;
+	// for (let i = cav.scene.children.length - 1; i >= 0; i--) { 
+	// 	if(cav.scene.children[i].type === "Mesh") {
+	// 		cav.scene.remove(cav.scene.children[i]); 
+	// 	}
+	// } 
+	// cav.scene.dispose();
+	// cav.camera.dispose();
+	// cav.renderer.dispose();
+	cancelAnimationFrame(animateId);
+	animateId = undefined;
+}
+
+let timeStep = 0.001;
+let step = 0;
 function drawRoom(data){
-	var scene = new THREE.Scene();
-	var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-	var renderer = new THREE.WebGLRenderer();
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	document.body.appendChild( renderer.domElement );
+	if(animateId){
+		document.body.removeChild( cav.renderer.domElement )
+		delCav();
+	}
+	cav.scene = new THREE.Scene();
+	cav.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+	cav.renderer = new THREE.WebGLRenderer();
+	cav.renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( cav.renderer.domElement );
 
 	let roomMap = initMap()
 
@@ -55,7 +87,7 @@ function drawRoom(data){
 		groundMesh.position.x = x;
 		groundMesh.position.z = y;	
 			
-		scene.add( groundMesh );
+		cav.scene.add( groundMesh );
 	}
 	
 	let box = new THREE.BoxGeometry( 50, 0.05 ,50);
@@ -65,7 +97,7 @@ function drawRoom(data){
 	groundMesh.position.y = 0;
 	groundMesh.position.x = 25;
 	groundMesh.position.z = 25;	
-	scene.add( groundMesh );
+	cav.scene.add( groundMesh );
 
 	for(let i=0;i<50;i++){
 		for(let j=0;j<50;j++){
@@ -77,18 +109,22 @@ function drawRoom(data){
 	}
 	// var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 	// scene.add( light );
-	var light = new THREE.PointLight( 0x404040, 10, 100 );
-	light.position.set( 25, 10, 25 );
-	scene.add( light );
+	cav.light = new THREE.PointLight( 0x404040, 10, 100 );
+	cav.light.position.set( 25, 25, 0 );
+	cav.scene.add( cav.light );
 
-	camera.position.x = 25;
-	camera.position.z = 70;
-	camera.position.y = 25;
-	camera.lookAt(new THREE.Vector3(25,0,25));
+	cav.camera.position.x = 25;
+	cav.camera.position.z = 70;
+	cav.camera.position.y = 25;
+	cav.camera.lookAt(new THREE.Vector3(25,0,25));
 
 	function animate() {
-		requestAnimationFrame( animate );
-		renderer.render( scene, camera );
+		animateId = requestAnimationFrame( animate );
+		cav.light.position.y = 25 
+		cav.light.position.x = Math.cos(step) * 25 + 25;
+		cav.light.position.z = Math.sin(step) * 25 + 25;
+		step = timeStep + step;
+		cav.renderer.render( cav.scene, cav.camera );
 	}
 	// var controls = new THREE.OrbitControls(camera,renderer.domElement)
 	// controls.addEventListener('change', animate)
@@ -107,4 +143,22 @@ function initMap(){
 		}
 	}
 	return map;
+}
+
+function dispose(parent,child){
+	if(child.children.length){
+		let arr  = child.children.filter(x=>x);
+		arr.forEach(a=>{
+			dispose(child,a)
+		})
+	}
+	if(child instanceof THREE.Mesh||child instanceof THREE.Line){
+		if(child.material.map) child.material.map.dispose();
+		child.material.dispose();
+		child.geometry.dispose();
+	}else if(child.material){
+		child.material.dispose();
+	}
+	child.remove();
+	parent.remove(child);
 }
