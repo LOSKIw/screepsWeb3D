@@ -148,6 +148,24 @@ function delCav(){
 	animateId = undefined;
 }
 
+function dispose(parent,child){
+	if(child.children.length){
+		let arr  = child.children.filter(x=>x);
+		arr.forEach(a=>{
+			dispose(child,a)
+		})
+	}
+	if(child instanceof THREE.Mesh||child instanceof THREE.Line){
+		if(child.material.map) child.material.map.dispose();
+		child.material.dispose();
+		child.geometry.dispose();
+	}else if(child.material){
+		child.material.dispose();
+	}
+	child.remove();
+	parent.remove(child);
+}
+
 function drawTerrain(){
     let roomMap = initMap()
 	for(let node of terrainData){
