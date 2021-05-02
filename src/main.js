@@ -258,7 +258,6 @@ function initMap(){
 }
 
 function drawStructure(){
-	console.log(structureData);
     let structData = structureData.objects;
     for(let node in structData){
         let x = structData[node].x;
