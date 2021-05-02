@@ -3,13 +3,18 @@
 # 强烈推荐[Screeps3D](https://github.com/thmsndk/Screeps3D)项目，本项目相比之下就是个幼儿园作业  
 # Strongly Recommend [Screeps3D](https://github.com/thmsndk/Screeps3D), comparing to that, my project is just a kindergarten homework
 
+| Feature | state |
+|:----:|:----:|
+|<img src="https://z3.ax1x.com/2021/05/02/geEWkV.png" height = "200" alt="Screeps3D" align=center />|<img src="https://z3.ax1x.com/2021/05/02/geEz1e.png" height = "200" alt="Screeps3D" align=center />|
+|Screeps 3D| My(Hahahahah...) |
+
 使用:  
 Three.js<br>
 axios  
 ***
 Todo List:  
 | Feature | state |
-|----|----|
+|:----:|:----:|
 | 获取token | ✔ |
 | 获取地形数据 | ✔ |
 | 生成基本房间 | ✔ |
@@ -26,13 +31,13 @@ Todo List:
 ## 被自己丑哭了!  
 
 | Structure | state |
-|----|----|
+|:----:|:----:|
 | extension | ✔ |
 | source | ✔ |
-| tower | ✔ |
+| tower | ✔(ah...err...?) |
 | rampart | ✔(?) |
 | link | ✔(?) |
 | controller | ✔(?) |
 | nuker | ✔ |
-| lab | (What is that SHIT?) |
+| lab | ✔(What is that SHIT?) |
 | observer | ✔(绷不住了啊) |
