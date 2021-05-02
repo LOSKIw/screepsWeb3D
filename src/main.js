@@ -54,7 +54,7 @@ async function getData(){
 }
 
 //
-let timeStepLight = 0.005;
+let timeStepLight = 0.0005;
 let stepLight = 0;
 // let timeStepCam = 0.001;
 // let stepCam = 0;

@@ -197,7 +197,7 @@ function drawObserver(x,y){
     cylinderUp.position.y = 0.95;
 
     let geometry = new THREE.SphereGeometry( 0.05, 64, 64 );
-    let material = new THREE.MeshLambertMaterial( { color: 0x808080 } );
+    let material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
     let sphere = new THREE.Mesh( geometry, material );
     sphere.position.x = x;
     sphere.position.z = y;
@@ -213,16 +213,16 @@ function drawObserver(x,y){
     torusR1.position.z = y;
     torusR1.position.y = 0.5;
 
-    let geometryR2 = new THREE.TorusGeometry( 0.3, 0.05, 32, 100 );
-    let materialR2 = new THREE.MeshLambertMaterial( { color: 0x808080 } );
+    let geometryR2 = new THREE.TorusGeometry( 0.25, 0.05, 32, 100 );
+    let materialR2 = new THREE.MeshLambertMaterial( { color: 0xff8080 } );
     let torusR2 = new THREE.Mesh( geometryR2, materialR2 );
     torusR2.rotateX(Math.PI/2)
     torusR2.position.x = x;
     torusR2.position.z = y;
     torusR2.position.y = 0.8;
 
-    let geometryR3 = new THREE.TorusGeometry( 0.2, 0.05, 32, 100 );
-    let materialR3 = new THREE.MeshLambertMaterial( { color: 0x808080 } );
+    let geometryR3 = new THREE.TorusGeometry( 0.1, 0.05, 32, 100 );
+    let materialR3 = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
     let torusR3 = new THREE.Mesh( geometryR3, materialR3 );
     torusR3.rotateX(Math.PI/2)
     torusR3.position.x = x;

@@ -1,5 +1,8 @@
 # screepsWeb3D
 
+# 强烈推荐[Screeps3D](https://github.com/thmsndk/Screeps3D)项目，本项目相比之下就是个幼儿园作业  
+# Strongly Recommend [Screeps3D](https://github.com/thmsndk/Screeps3D), comparing to that, my project is just a kindergarten homework
+
 使用:  
 Three.js<br>
 axios  
