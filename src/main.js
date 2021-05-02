@@ -2,14 +2,42 @@ let terrainData;
 let structureData;
 let animateId;
 
-function controlRotate(){
-    if(document.getElementById('rotateRadio').checked){
-        timeStepCam = 0.001;
-    }
-    else{
-        timeStepCam = 0;
-    }
-}
+let near = 0.1;
+let far = 1000;
+let fov = 50;
+
+// function mousewheel(e) {
+// 	e.preventDefault();
+// 	//e.stopPropagation();  
+// 	if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件  
+// 		if (e.wheelDelta > 0) { //当滑轮向上滚动时  
+// 			fov -= (near < fov ? 1 : 0);
+// 		}
+// 		if (e.wheelDelta < 0) { //当滑轮向下滚动时  
+// 			fov += (fov < far ? 1 : 0);
+// 		}
+// 	} else if (e.detail) {  //Firefox滑轮事件  
+// 		if (e.detail > 0) { //当滑轮向上滚动时  
+// 			fov -= 1;
+// 		}
+// 		if (e.detail < 0) { //当滑轮向下滚动时  
+// 			fov += 1;
+// 		}
+// 	}
+// 	cav.camera.fov = fov;
+// 	cav.camera.updateProjectionMatrix();
+// 	cav.renderer.render(cav.scene, cav.camera);
+// }
+// document.addEventListener('mousewheel', mousewheel, { passive: false });
+
+// function controlRotate(){
+//     if(document.getElementById('rotateRadio').checked){
+//         timeStepCam = 0.001;
+//     }
+//     else{
+//         timeStepCam = 0;
+//     }
+// }
 
 
 async function getData(){
@@ -28,8 +56,8 @@ async function getData(){
 //
 let timeStepLight = 0.005;
 let stepLight = 0;
-let timeStepCam = 0.001;
-let stepCam = 0;
+// let timeStepCam = 0.001;
+// let stepCam = 0;
 function initScene(){
     if(animateId){
 		document.body.removeChild( cav.renderer.domElement );
@@ -47,19 +75,23 @@ function initScene(){
 	cav.camera.position.x = 25;
 	cav.camera.position.z = 70;
 	cav.camera.position.y = 25;
-	cav.camera.lookAt(new THREE.Vector3(25,0,25));
+	//cav.camera.lookAt(new THREE.Vector3(25,0,25))
+	controls = new THREE.OrbitControls( cav.camera, cav.renderer.domElement );
+	controls.enablePan = false;
+	controls.target = new THREE.Vector3(25, 0, 25)
 	function animate() {
 		animateId = requestAnimationFrame( animate );
-		cav.light.position.y = 25 
-		cav.light.position.x = Math.cos(stepLight) * 25 + 25;
-		cav.light.position.z = Math.sin(stepLight) * 25 + 25;
+		controls.update();
+		// cav.light.position.y = 25 
+		// cav.light.position.x = Math.cos(stepLight) * 25 + 25;
+		// cav.light.position.z = Math.sin(stepLight) * 25 + 25;
 
-		cav.camera.position.z = Math.cos(stepCam) * 50 + 25;
-		cav.camera.position.x = Math.sin(stepCam) * 50 + 25;
-		cav.camera.lookAt(new THREE.Vector3(25,0,25));
+		// cav.camera.position.z = Math.cos(stepCam) * 50 + 25;
+		// cav.camera.position.x = Math.sin(stepCam) * 50 + 25;
+		// cav.camera.lookAt(new THREE.Vector3(25,0,25));
 
 		stepLight = timeStepLight + stepLight;
-		stepCam = timeStepCam + stepCam;
+		// stepCam = timeStepCam + stepCam;
 		cav.renderer.render( cav.scene, cav.camera );
 	}
 	animate();
@@ -226,6 +258,7 @@ function initMap(){
 }
 
 function drawStructure(){
+	console.log(structureData);
     let structData = structureData.objects;
     for(let node in structData){
         let x = structData[node].x;
