@@ -15,8 +15,13 @@ Todo List:
 | ~~旋转视角(开关)~~ | (改为鼠标控制) |
 | 鼠标旋转缩放 | ✔ |
 | 绘制建筑 ||
-| 部分建筑边缘线 ||
+| ~~部分建筑边缘线~~ | (用新材质的光交互来体现) |
 ***
+
+## 建议对比Screeps3D的建模，我反正绷不住了  
+
+## 被自己丑哭了!  
+
 | Structure | state |
 |----|----|
 | extension | ✔ |
@@ -25,3 +30,6 @@ Todo List:
 | rampart | ✔(?) |
 | link | ✔(?) |
 | controller | ✔(?) |
+| nuker | ✔ |
+| lab | (What is that SHIT?) |
+| observer | ✔(绷不住了啊) |

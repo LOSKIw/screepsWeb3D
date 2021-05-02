@@ -4,7 +4,10 @@ const drawFunc = {
     rampart: drawRampart,
     tower: drawTower,
     link: drawLink,
-    controller: drawController
+    controller: drawController,
+    nuker: drawNuker,
+    lab: drawLab,
+    observer: drawObserver
 }
 
 
@@ -22,39 +25,26 @@ function drawSource(x,y){
 
 function drawExtension(x,y){
     let geometryIn = new THREE.CylinderGeometry( 0.3, 0.3, 0.4, 32 );
-    let materialIn = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    let materialIn = new THREE.MeshLambertMaterial( {color: 0xffff00} );
     let cylinderIn = new THREE.Mesh( geometryIn, materialIn );
     cylinderIn.position.x = x;
     cylinderIn.position.z = y;
     cylinderIn.position.y = 0.2;
 
-    let edges1 = new THREE.EdgesGeometry( geometryIn, 90 );
-    let line1 = new THREE.LineSegments( edges1, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
-    line1.position.x = x;
-    line1.position.z = y;
-    line1.position.y = 0.2;
-
     let geometryOuter = new THREE.CylinderGeometry( 0.4, 0.4, 0.3, 32 );
-    let materialOuter = new THREE.MeshBasicMaterial( {color: 0xa0a0a0} );
+    let materialOuter = new THREE.MeshLambertMaterial( {color: 0xa0a0a0} );
     let cylinderOuter = new THREE.Mesh( geometryOuter, materialOuter );
     cylinderOuter.position.x = x;
     cylinderOuter.position.z = y;
     cylinderOuter.position.y = 0.15;
 
-    let edges2 = new THREE.EdgesGeometry( geometryOuter, 90 );
-    let line2 = new THREE.LineSegments( edges2, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
-    line2.position.x = x;
-    line2.position.z = y;
-    line2.position.y = 0.15;
-
     cav.scene.add( cylinderIn );
     cav.scene.add( cylinderOuter );
-    cav.scene.add( line1, line2 );
 }
 
 function drawRampart(x,y){
     let geometry = new THREE.BoxGeometry( 1, 2, 1);
-    let material = new THREE.MeshBasicMaterial({color: 0xff0000,transparent: true,opacity: 0.3,});;
+    let material = new THREE.MeshLambertMaterial({color: 0xff0000, transparent: true,opacity: 0.3,});;
     let ram = new THREE.Mesh( geometry, material );
     ram.position.x = x;
     ram.position.z = y;
@@ -64,63 +54,51 @@ function drawRampart(x,y){
 
 function drawTower(x,y){
     let geometryRed = new THREE.CylinderGeometry( 0.4, 0.4, 0.2, 32 );
-    let materialRed = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+    let materialRed = new THREE.MeshLambertMaterial( {color: 0xff0000} );
     let cylinderRed = new THREE.Mesh( geometryRed, materialRed );
     cylinderRed.position.x = x;
     cylinderRed.position.z = y;
     cylinderRed.position.y = 0.1;
 
-    let edges1 = new THREE.EdgesGeometry( geometryRed, 90 );
-    let line1 = new THREE.LineSegments( edges1, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
-    line1.position.x = x;
-    line1.position.z = y;
-    line1.position.y = 0.1;
-
     let geometryBlack = new THREE.CylinderGeometry( 0.35, 0.3, 0.25, 32 );
-    let materialBlack = new THREE.MeshBasicMaterial( {color: 0x000000} );
+    let materialBlack = new THREE.MeshLambertMaterial( {color: 0x000000} );
     let cylinderBlack = new THREE.Mesh( geometryBlack, materialBlack );
     cylinderBlack.position.x = x;
     cylinderBlack.position.z = y;
     cylinderBlack.position.y = 0.125;
 
-    // let edges2 = new THREE.EdgesGeometry( geometryBlack, 90 );
-    // let line2 = new THREE.LineSegments( edges2, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
-    // line2.position.x = x;
-    // line2.position.z = y;
-    // line2.position.y = 0.125;
-
     let geometryBody = new THREE.SphereGeometry( 0.3, 40, 40 ,0,Math.PI*2,0,Math.PI/2)
-    let materialBody = new THREE.MeshBasicMaterial({color: 0xffff00});;
+    let materialBody = new THREE.MeshLambertMaterial({color: 0xffff00});;
     let towerBody = new THREE.Mesh( geometryBody, materialBody );
     towerBody.position.x = x;
     towerBody.position.z = y;
     towerBody.position.y = 0.25;
 
     let geometryBarrel = new THREE.CylinderGeometry( 0.05, 0.05, 0.5, 32 );
-    let materialBarrel = new THREE.MeshBasicMaterial( {color: 0x808080} );
+    let materialBarrel = new THREE.MeshLambertMaterial( {color: 0x808080} );
     let cylinderBarrel = new THREE.Mesh( geometryBarrel, materialBarrel );
     cylinderBarrel.rotateX(Math.PI/2)
     cylinderBarrel.position.x = x;
     cylinderBarrel.position.z = y-0.25;
     cylinderBarrel.position.y = 0.35;
 
-    cav.scene.add( cylinderBlack, cylinderRed, line1, towerBody, cylinderBarrel );
+    cav.scene.add( cylinderBlack, cylinderRed, towerBody, cylinderBarrel );
 }
 
 function drawLink(x,y){
     let geometryUp = new THREE.ConeGeometry( 0.3, 0.4, 32 );
-    let materialUp = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    let materialUp = new THREE.MeshLambertMaterial( {color: 0xffff00} );
     let linkUp = new THREE.Mesh( geometryUp, materialUp );
     linkUp.position.x = x;
     linkUp.position.z = y;
-    linkUp.position.y = 0.725;
+    linkUp.position.y = 0.7;
 
     let geometryDown = new THREE.ConeGeometry( 0.3, 0.4, 32 );
-    let materialDown = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    let materialDown = new THREE.MeshLambertMaterial( {color: 0xffff00} );
     let linkDown = new THREE.Mesh( geometryDown, materialDown );
     linkDown.position.x = x;
     linkDown.position.z = y;
-    linkDown.position.y = 0.275;
+    linkDown.position.y = 0.3;
     linkDown.rotateX(Math.PI)
 
     cav.scene.add( linkUp, linkDown );
@@ -134,7 +112,7 @@ function drawController(x,y){
     conDown.position.z = y;
     conDown.position.y = 2.09;
 
-    let edges1 = new THREE.EdgesGeometry( geometryDown, 45 );
+    let edges1 = new THREE.EdgesGeometry( geometryDown, 30 );
     let line1 = new THREE.LineSegments( edges1, new THREE.LineBasicMaterial( { color: 0x0000 } ) );
     line1.position.x = x;
     line1.position.z = y;
@@ -148,4 +126,108 @@ function drawController(x,y){
     conUp.position.y = 2.1;
 
     cav.scene.add( conDown, conUp, line1 );
+}
+
+function drawNuker(x,y){
+    let geometryB1 = new THREE.CylinderGeometry( 0.38, 0.4, 0.05, 32 );
+    let materialB1 = new THREE.MeshLambertMaterial( {color: 0x000000} );
+    let cylinderB1 = new THREE.Mesh( geometryB1, materialB1 );
+    cylinderB1.position.x = x;
+    cylinderB1.position.z = y;
+    cylinderB1.position.y = 0.025;
+
+    let geometryB2 = new THREE.CylinderGeometry( 0.36, 0.38, 0.1, 32 );
+    let materialB2 = new THREE.MeshLambertMaterial( {color: 0xffffff} );
+    let cylinderB2 = new THREE.Mesh( geometryB2, materialB2 );
+    cylinderB2.position.x = x;
+    cylinderB2.position.z = y;
+    cylinderB2.position.y = 0.1;
+
+    let geometryB3 = new THREE.CylinderGeometry( 0.34, 0.36, 0.05, 32 );
+    let materialB3 = new THREE.MeshLambertMaterial( {color: 0x000000} );
+    let cylinderB3 = new THREE.Mesh( geometryB3, materialB3 );
+    cylinderB3.position.x = x;
+    cylinderB3.position.z = y;
+    cylinderB3.position.y = 0.175;
+
+    let geometryUp = new THREE.ConeGeometry( 0.34, 0.80, 32 );
+    let materialUp = new THREE.MeshLambertMaterial( {color: 0xffff00} );
+    let cylinderUp = new THREE.Mesh( geometryUp, materialUp );
+    cylinderUp.position.x = x;
+    cylinderUp.position.z = y;
+    cylinderUp.position.y = 0.6;
+
+    cav.scene.add( cylinderB1, cylinderB2, cylinderB3 );
+    cav.scene.add( cylinderUp );
+}
+
+function drawLab(x,y){
+    let geometry = new THREE.SphereGeometry( 0.5, 64, 64 );
+    let material = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+    let sphere = new THREE.Mesh( geometry, material );
+    sphere.position.x = x;
+    sphere.position.z = y;
+    sphere.position.y = 0.5;
+
+    let geometryB = new THREE.CylinderGeometry( 0.4, 0.4, 0.3, 32 );
+    let materialB = new THREE.MeshLambertMaterial( {color: 0xffff00 } );
+    let cylinderB = new THREE.Mesh( geometryB, materialB );
+    cylinderB.position.x = x;
+    cylinderB.position.z = y;
+    cylinderB.position.y = 0.15;
+
+    cav.scene.add( cylinderB );
+    cav.scene.add( sphere );
+}
+
+function drawObserver(x,y){
+
+    let geometryB = new THREE.CylinderGeometry( 0.1, 0.3, 0.5, 32 );
+    let materialB = new THREE.MeshLambertMaterial( {color: 0x808080 } );
+    let cylinderB = new THREE.Mesh( geometryB, materialB );
+    cylinderB.position.x = x;
+    cylinderB.position.z = y;
+    cylinderB.position.y = 0.25;
+
+    let geometryUp = new THREE.ConeGeometry( 0.05, 0.9, 32 );
+    let materialUp = new THREE.MeshLambertMaterial( {color: 0x808080 } );
+    let cylinderUp = new THREE.Mesh( geometryUp, materialUp );
+    cylinderUp.position.x = x;
+    cylinderUp.position.z = y;
+    cylinderUp.position.y = 0.95;
+
+    let geometry = new THREE.SphereGeometry( 0.05, 64, 64 );
+    let material = new THREE.MeshLambertMaterial( { color: 0x808080 } );
+    let sphere = new THREE.Mesh( geometry, material );
+    sphere.position.x = x;
+    sphere.position.z = y;
+    sphere.position.y = 1.375;
+
+    cav.scene.add( cylinderB, cylinderUp, sphere)
+
+    let geometryR1 = new THREE.TorusGeometry( 0.4, 0.05, 32, 100 );
+    let materialR1 = new THREE.MeshLambertMaterial( { color: 0x808080 } );
+    let torusR1 = new THREE.Mesh( geometryR1, materialR1 );
+    torusR1.rotateX(Math.PI/2)
+    torusR1.position.x = x;
+    torusR1.position.z = y;
+    torusR1.position.y = 0.5;
+
+    let geometryR2 = new THREE.TorusGeometry( 0.3, 0.05, 32, 100 );
+    let materialR2 = new THREE.MeshLambertMaterial( { color: 0x808080 } );
+    let torusR2 = new THREE.Mesh( geometryR2, materialR2 );
+    torusR2.rotateX(Math.PI/2)
+    torusR2.position.x = x;
+    torusR2.position.z = y;
+    torusR2.position.y = 0.8;
+
+    let geometryR3 = new THREE.TorusGeometry( 0.2, 0.05, 32, 100 );
+    let materialR3 = new THREE.MeshLambertMaterial( { color: 0x808080 } );
+    let torusR3 = new THREE.Mesh( geometryR3, materialR3 );
+    torusR3.rotateX(Math.PI/2)
+    torusR3.position.x = x;
+    torusR3.position.z = y;
+    torusR3.position.y = 1.1;
+
+    cav.scene.add( torusR1, torusR2, torusR3 );
 }

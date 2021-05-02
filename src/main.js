@@ -72,6 +72,10 @@ function initScene(){
 	cav.light = new THREE.PointLight( 0x404040, 5, 100 );
 	cav.light.position.set( 25, 25, 0 );
 	cav.scene.add( cav.light );
+
+	cav.allLight = new THREE.AmbientLight( 0x505050 ); // soft white light
+	cav.scene.add( cav.allLight )
+
 	cav.camera.position.x = 25;
 	cav.camera.position.z = 70;
 	cav.camera.position.y = 25;
@@ -82,9 +86,9 @@ function initScene(){
 	function animate() {
 		animateId = requestAnimationFrame( animate );
 		controls.update();
-		// cav.light.position.y = 25 
-		// cav.light.position.x = Math.cos(stepLight) * 25 + 25;
-		// cav.light.position.z = Math.sin(stepLight) * 25 + 25;
+		cav.light.position.y = 25 
+		cav.light.position.x = Math.cos(stepLight) * 25 + 25;
+		cav.light.position.z = Math.sin(stepLight) * 25 + 25;
 
 		// cav.camera.position.z = Math.cos(stepCam) * 50 + 25;
 		// cav.camera.position.x = Math.sin(stepCam) * 50 + 25;
