@@ -6,6 +6,7 @@ let near = 0.1;
 let far = 1000;
 let fov = 50;
 
+let roadList = [];
 // function mousewheel(e) {
 // 	e.preventDefault();
 // 	//e.stopPropagation();  
@@ -210,7 +211,7 @@ function drawTerrain(){
 
     let box = new THREE.BoxGeometry( 50, 0.01 ,50);
 	let groundMesh = new THREE.Mesh( box ,
-		new THREE.MeshLambertMaterial({ color: 0x808080 }))
+		new THREE.MeshLambertMaterial({ color: 0x404040 }))
 	groundMesh.position.y = 0;
 	groundMesh.position.x = 24.5;
 	groundMesh.position.z = 24.5;	
@@ -227,7 +228,7 @@ function drawTerrain(){
 }
 
 function addBlock(x,y,type){
-    let color = 0x808080;
+    let color = 0x404040;
     let height = 0.1;
     if(type == 2){
         color = 0x00ff00;
@@ -262,12 +263,17 @@ function initMap(){
 }
 
 function drawStructure(){
+	roadList = [];
     let structData = structureData.objects;
     for(let node in structData){
         let x = structData[node].x;
         let y = structData[node].y;
+		if(structData[node].type == 'road'){
+			roadList.push([x,y]);
+		}
         if(drawFunc[structData[node].type] != undefined){
             drawFunc[structData[node].type](x,y)
         }
     }
+	//connectRoad();
 }

@@ -7,7 +7,8 @@ const drawFunc = {
     controller: drawController,
     nuker: drawNuker,
     lab: drawLab,
-    observer: drawObserver
+    observer: drawObserver,
+    road: drawRoad
 }
 
 
@@ -230,4 +231,56 @@ function drawObserver(x,y){
     torusR3.position.y = 1.1;
 
     cav.scene.add( torusR1, torusR2, torusR3 );
+}
+
+function drawRoad(x,y){
+    // let geometry = new THREE.CylinderGeometry( 0.4, 0.2, 0.15, 32 );
+    let geometry = new THREE.BoxGeometry( 1, 0.2, 1);
+    let material = new THREE.MeshLambertMaterial( {color: 0xa0a0a0} );
+    let cylinder = new THREE.Mesh( geometry, material );
+    cylinder.position.x = x;
+    cylinder.position.z = y;
+    cylinder.position.y = 0.075;
+
+    cav.scene.add( cylinder );
+}
+
+const dirLoc = [[-1,0],[1,0],[0,1],[0,-1]];
+const unDirLoc = [[-1,-1],[1,1],[-1,1],[1,-1]];
+
+
+function isContained(array, element) {  // 判断二维数组array中是否存在一维数组element
+    for (let el of array) {
+        if (el.length === element.length) {
+            for (let index in el) {
+                if (el[index] !== element[index]) {
+                    break;
+                }
+                if (index == (el.length - 1)) {    // 到最后一个元素都没有出现不相等，就说明这两个数组相等。
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function connectRoad(){
+    while(roadList.length > 0){
+        let node = roadList.shift();
+        for(let dir of dirLoc){
+            let temp = [node[0]+dir[0],node[1]+dir[1]];
+            if(isContained(roadList,temp)){
+                let geometry = new THREE.BoxGeometry( 1, 0.2, 0.2 );
+                let material = new THREE.MeshLambertMaterial( {color: 0x808080} );
+                let cube = new THREE.Mesh( geometry, material );
+                //cube.lookAt(new THREE.Vector3(temp[0],0.1,temp[1]))
+                cube.position.x = node[0];
+                cube.position.z = node[1];
+                cube.position.y = 0.1;
+                
+                cav.scene.add( cube );
+            }
+        }
+    }
 }
